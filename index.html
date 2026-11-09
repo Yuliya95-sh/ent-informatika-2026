@@ -323,7 +323,7 @@ const secCls=n=>"sc sc"+(+n);
 const cssVar=name=>getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
 /* ---------- статистика для учителя (Google Таблица через Apps Script) ---------- */
-const STATS_URL="";   // URL веб-приложения Apps Script; пусто — статистика выключена
+const STATS_URL="https://script.google.com/macros/s/AKfycbw_hpWOBDVTWjrKSxDPUDX14M-tJMbKR9LWULvlnV__AcQ_Fp98C6gbQjd0V_Rkr35d/exec";   // URL веб-приложения Apps Script; пусто — статистика выключена
 const lsGet=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}};
 const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 let student=lsGet("ent-student",null);
