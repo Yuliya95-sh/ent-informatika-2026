@@ -1,0 +1,339 @@
+<meta charset="utf-8">
+<title>ЕНТ Информатика 2026</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Unbounded:wght@500;700&display=swap">
+<style>
+/* Layout: учебная тетрадь — узкая навигация по 6 разделам слева, справа колонка текста ~68ch; маркер-выделение для формул, тренажёр в конце каждой темы */
+:root{
+  --bg:#F3F6F7; --surface:#FFFFFF; --sunk:#E9EEF0; --ink:#13202A; --muted:#566673; --line:#D5DDE2;
+  --accent:#0B7564; --accent-ink:#FFFFFF; --accent-soft:#DDF0EC;
+  --mark:#FFE58A; --mark-ink:#2A2100;
+  --ok:#1E7B3A; --ok-soft:#E1F3E6; --bad:#B3261E; --bad-soft:#FBE4E2; --warn:#8A5A00; --warn-soft:#FFF1D6;
+  --code-bg:#0F1A21; --code-ink:#DCE6EA; --c-kw:#7FD6C2; --c-str:#F2C97D; --c-num:#F59E8B; --c-com:#7E8E99; --c-tag:#8DB7FF;
+  --f-display:"Unbounded","Golos Text",system-ui,sans-serif;
+  --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,"Courier New",monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1418; --surface:#151D22; --sunk:#1B252B; --ink:#E4EBEE; --muted:#93A3AD; --line:#27333A;
+  --accent:#43C6AC; --accent-ink:#06201B; --accent-soft:#16332E;
+  --mark:#5A4A12; --mark-ink:#FFF2C4;
+  --ok:#5CCB7B; --ok-soft:#173222; --bad:#FF8A80; --bad-soft:#3A1D1B; --warn:#F0C060; --warn-soft:#33290F;
+  --code-bg:#0A1116; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1418; --surface:#151D22; --sunk:#1B252B; --ink:#E4EBEE; --muted:#93A3AD; --line:#27333A;
+  --accent:#43C6AC; --accent-ink:#06201B; --accent-soft:#16332E;
+  --mark:#5A4A12; --mark-ink:#FFF2C4;
+  --ok:#5CCB7B; --ok-soft:#173222; --bad:#FF8A80; --bad-soft:#3A1D1B; --warn:#F0C060; --warn-soft:#33290F;
+  --code-bg:#0A1116; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.app{display:grid;grid-template-columns:290px minmax(0,1fr);min-height:100vh}
+aside{background:var(--surface);border-right:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);height:100vh;overflow-y:auto;padding:20px 14px 40px max(14px,env(safe-area-inset-left,0px))}
+.brand{font-family:var(--f-display);font-weight:700;font-size:17px;line-height:1.25;padding:4px 8px 14px;letter-spacing:.01em}
+.brand small{display:block;font-family:var(--f-body);font-weight:500;font-size:12.5px;color:var(--muted);letter-spacing:0;margin-top:4px}
+nav .sec{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;padding:16px 8px 6px}
+nav a{display:flex;gap:10px;align-items:baseline;text-decoration:none;color:var(--ink);padding:7px 8px;border-radius:8px;font-size:14.5px;line-height:1.35}
+nav a:hover{background:var(--sunk)}
+nav a.on{background:var(--accent-soft);color:var(--ink);font-weight:600}
+nav a .n{font-family:var(--f-mono);font-size:12px;color:var(--muted);min-width:20px;font-variant-numeric:tabular-nums}
+nav a .pr{margin-left:auto;font-family:var(--f-mono);font-size:11px;color:var(--muted);white-space:nowrap}
+nav a.special{font-weight:600}
+.menu-btn{display:none}
+main{min-width:0;padding-block:28px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.col{max-width:800px;margin:0 auto}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:600}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(24px,3.4vw,34px);line-height:1.2;margin:6px 0 10px;text-wrap:balance;letter-spacing:-.005em}
+h2{font-size:22px;line-height:1.3;margin:40px 0 10px;text-wrap:balance;font-weight:700}
+h3{font-size:17.5px;margin:26px 0 6px;font-weight:700}
+p,li{max-width:68ch}
+.lead{font-size:17px;color:var(--muted)}
+.content table{border-collapse:collapse;font-size:14.5px;min-width:100%}
+.tw{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.content th,.content td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.content th{background:var(--sunk);font-weight:600;font-size:13.5px}
+.content tr:last-child td{border-bottom:0}
+.content td.c,.content th.c{text-align:center}
+mark,.mk{background:var(--mark);color:var(--mark-ink);padding:1px 5px;border-radius:4px}
+.f{font-family:var(--f-mono);font-size:.93em;background:var(--mark);color:var(--mark-ink);padding:2px 7px;border-radius:5px;white-space:nowrap}
+code{font-family:var(--f-mono);font-size:.9em;background:var(--sunk);padding:1px 5px;border-radius:4px}
+pre.code{background:var(--code-bg);color:var(--code-ink);font-family:var(--f-mono);font-size:13.5px;line-height:1.55;padding:14px 16px;border-radius:var(--r);overflow-x:auto;margin:12px 0}
+pre.code code{background:none;padding:0;font-size:inherit;color:inherit}
+pre.code .lang{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--c-com);margin-bottom:6px}
+.k{color:var(--c-kw)}.s{color:var(--c-str)}.d{color:var(--c-num)}.cm{color:var(--c-com);font-style:italic}.tg{color:var(--c-tag)}
+.note{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:12px 16px;margin:16px 0}
+.note>b:first-child{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;color:var(--muted)}
+.trap{background:var(--warn-soft);border-color:transparent}
+.trap>b:first-child{color:var(--warn)}
+.ex{background:var(--accent-soft);border-color:transparent}
+.ex>b:first-child{color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:14px 0}
+.grid2>div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;min-width:0}
+.grid2>div h4{margin:0 0 4px;font-size:15px}
+.grid2>div p{margin:0;font-size:14.5px}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+.kv div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.kv b{display:block;font-family:var(--f-display);font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+.kv span{font-size:13px;color:var(--muted)}
+/* quiz */
+.quiz-h{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:48px;padding-top:18px;border-top:2px solid var(--ink)}
+.quiz-h h2{margin:0}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;margin:14px 0}
+.q .meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px;font-size:12.5px;color:var(--muted)}
+.chip{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--sunk);color:var(--ink);letter-spacing:.02em}
+.chip.lv-A{background:var(--ok-soft);color:var(--ok)}.chip.lv-B{background:var(--warn-soft);color:var(--warn)}.chip.lv-C{background:var(--bad-soft);color:var(--bad)}
+.q .qt{font-weight:500;margin:0 0 10px}
+.opts{display:grid;gap:6px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:var(--bg)}
+.opt:hover{border-color:var(--accent)}
+.opt input{margin-top:5px;accent-color:var(--accent)}
+.opt .L{font-family:var(--f-mono);font-weight:600;color:var(--muted);min-width:16px}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.match{display:grid;gap:8px}
+.match .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.match select{width:100%;font:inherit;font-size:14.5px;padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.match .row.right{border-color:var(--ok);background:var(--ok-soft)}.match .row.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.match .ans{grid-column:1/-1;font-size:13px;color:var(--ok)}
+.btn{font:inherit;font-weight:600;font-size:14.5px;padding:8px 16px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn:disabled{opacity:.5;cursor:default}
+.qa{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.res{font-weight:600;font-size:14px}
+.res.ok{color:var(--ok)}.res.bad{color:var(--bad)}.res.part{color:var(--warn)}
+.expl{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--sunk);font-size:14.5px}
+.ctx{background:var(--sunk);border-radius:var(--r);padding:14px 16px;margin:10px 0}
+.timer{font-family:var(--f-mono);font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
+.sticky{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.bar{height:8px;background:var(--sunk);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:40px;flex-wrap:wrap}
+.pager a{flex:1 1 220px;text-decoration:none;border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;color:var(--ink);background:var(--surface)}
+.pager a small{display:block;color:var(--muted);font-size:12px}
+.pager a.next{text-align:right}
+.toc{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:12px 16px;margin:18px 0 8px}
+.toc>b{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.toc ol{margin:6px 0 0;padding-left:22px;columns:2 260px;column-gap:28px}
+.toc li{font-size:14.5px;line-height:1.45;padding:2px 0;break-inside:avoid}
+.toc a{text-decoration:none}.toc a:hover{text-decoration:underline}
+.content h2{scroll-margin-top:16px}
+.task{border:1px solid var(--line);border-left:0;background:var(--surface);border-radius:var(--r);padding:12px 16px;margin:14px 0}
+.task>b:first-child{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:4px}
+details.sol{margin-top:8px;border-top:1px dashed var(--line);padding-top:8px}
+details.sol summary{cursor:pointer;font-weight:600;color:var(--accent);font-size:14.5px}
+details.sol[open] summary{margin-bottom:6px}
+.steps{margin:6px 0;padding-left:20px}.steps li{margin:3px 0}
+@media (max-width:860px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  aside{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);padding:12px max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px))}
+  .menu-btn{display:inline-flex;margin-left:auto}
+  .brand{display:flex;align-items:center;gap:12px;padding:4px 0}
+  aside nav{display:none}
+  aside.open nav{display:block}
+  .match .row{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:no-preference){.opt,.btn,nav a{transition:background .15s,border-color .15s}}
+</style>
+
+<div class="app">
+  <aside id="aside">
+    <div class="brand"><div>ЕНТ · Информатика<small>Спецификация 2026 · 13 тем · 40 заданий</small></div><button class="btn ghost menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Темы</button></div>
+    <nav id="nav"></nav>
+  </aside>
+  <main><div class="col" id="view"></div></main>
+</div>
+
+<script>
+const SECTIONS=[
+ {n:"01",t:"Компьютерные системы",topics:[["t01","Устройства компьютера"],["t02","Компьютерные сети. Информационная безопасность"]]},
+ {n:"02",t:"Информационные процессы",topics:[["t03","Представление и измерение информации. Кодирование"],["t04","Системы счисления"],["t05","Логические основы компьютера"]]},
+ {n:"03",t:"Компьютерное мышление",topics:[["t06","Программирование на Python"],["t07","Алгоритмы: функции, рекурсия, строки, файлы, сортировка, графы"]]},
+ {n:"04",t:"Аппаратное и программное обеспечение",topics:[["t08","Аппаратное и программное обеспечение"]]},
+ {n:"05",t:"Информационные процессы и системы",topics:[["t09","Реляционная база данных"],["t10","Разработка БД. SQL-запросы"],["t11","Тенденции IT. IT-стартап. 3D-моделирование"]]},
+ {n:"06",t:"Создание и преобразование информационных объектов",topics:[["t12","Создание и преобразование информационных объектов"],["t13","Веб-проектирование"]]}
+];
+const TOPIC={};SECTIONS.forEach(s=>s.topics.forEach(([id,t],i)=>TOPIC[id]={id,title:t,sec:s,num:id.slice(1)}));
+const ORDER=["spec",...SECTIONS.flatMap(s=>s.topics.map(x=>x[0])),"mock"];
+const DATA={};const CONTEXTS=[];
+function reg(id,obj){DATA[id]=obj}
+function regCtx(c){CONTEXTS.push(c)}
+const TRAP_MK='<div class="note trap"><b>Ловушки ЕНТ</b>';
+function ext(id,o){const D=DATA[id];if(!D)return;
+  if(o.html){const i=D.html.lastIndexOf(TRAP_MK);D.html=i>=0?D.html.slice(0,i)+o.html+D.html.slice(i):D.html+o.html}
+  if(o.traps){const k=D.html.lastIndexOf(TRAP_MK);const u=D.html.indexOf("<ul>",k);if(k>=0&&u>=0)D.html=D.html.slice(0,u+4)+o.traps.map(t=>"<li>"+t+"</li>").join("")+D.html.slice(u+4)}
+  if(o.quiz)D.quiz=(D.quiz||[]).concat(o.quiz)}
+</script>
+<script src="data/spec.js"></script>
+<script src="data/s1.js"></script>
+<script src="data/s2.js"></script>
+<script src="data/s3.js"></script>
+<script src="data/s4.js"></script>
+<script src="data/s5.js"></script>
+<script src="data/s6.js"></script>
+<script src="data/d1.js"></script>
+<script src="data/d2.js"></script>
+<script src="data/d3.js"></script>
+<script src="data/d4.js"></script>
+<script src="data/d5.js"></script>
+<script src="data/d6.js"></script>
+<script src="data/tb11.js"></script>
+<script src="data/tb10.js"></script>
+<script src="data/tb79.js"></script>
+<script src="data/contexts.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+let store={};try{store=JSON.parse(localStorage.getItem("ent-inf-v1")||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem("ent-inf-v1",JSON.stringify(store))}catch(e){}}
+
+/* ---------- подсветка кода ---------- */
+const PYKW="def|return|if|elif|else|for|while|in|not|and|or|import|from|as|with|print|input|range|len|int|str|float|list|dict|set|tuple|True|False|None|break|continue|lambda|global|nonlocal|pass|try|except|is|open|sorted|sum|max|min|abs|round|map|enumerate|bool|ord|chr|bin|oct|hex|append|split|join";
+function hl(lang,src){
+  let re,cls;
+  if(lang==="py"){re=new RegExp('(#[^\\n]*)|("(?:[^"\\\\\\n]|\\\\.)*"|\'(?:[^\'\\\\\\n]|\\\\.)*\')|\\b('+PYKW+')\\b|\\b(\\d+(?:\\.\\d+)?)\\b','g');cls=["cm","s","k","d"]}
+  else if(lang==="sql"){re=/(--[^\n]*)|('(?:[^'\n])*')|\b(SELECT|FROM|WHERE|AND|OR|NOT|ORDER|BY|GROUP|HAVING|INSERT|INTO|VALUES|UPDATE|SET|DELETE|CREATE|TABLE|DROP|ALTER|ADD|COLUMN|PRIMARY|FOREIGN|KEY|REFERENCES|INTEGER|INT|VARCHAR|CHAR|DATE|DECIMAL|FLOAT|TEXT|BOOLEAN|NULL|IS|LIKE|BETWEEN|IN|AS|ASC|DESC|DISTINCT|COUNT|SUM|AVG|MIN|MAX|JOIN|INNER|LEFT|RIGHT|ON|LIMIT|UNIQUE|DEFAULT|DATABASE)\b|\b(\d+(?:\.\d+)?)\b/gi;cls=["cm","s","k","d"]}
+  else if(lang==="html"){re=/(<!--[\s\S]*?-->)|("[^"\n]*")|(<\/?[a-zA-Z][a-zA-Z0-9]*|\/?>)|([a-z-]+(?=\s*:))/g;cls=["cm","s","tg","k"]}
+  else return esc(src);
+  let out="",last=0,m;re.lastIndex=0;
+  while((m=re.exec(src))){out+=esc(src.slice(last,m.index));let g=1;while(g<m.length&&m[g]===undefined)g++;out+='<span class="'+cls[g-1]+'">'+esc(m[0])+"</span>";last=re.lastIndex;if(m[0]==="")re.lastIndex++}
+  return out+esc(src.slice(last));
+}
+const LN={py:"Python",sql:"SQL",html:"HTML / CSS",txt:"",out:"Вывод"};
+function codeBlock(lang,src){src=src.replace(/^\n+|\s+$/g,"");return '<pre class="code"><code>'+(LN[lang]?'<span class="lang">'+LN[lang]+'</span>':"")+hl(lang,src)+"</code></pre>"}
+function prep(html){return html.replace(/\[\[(py|sql|html|txt|out)\]\]([\s\S]*?)\[\[\/\1\]\]/g,(_,l,s)=>codeBlock(l,s)).replace(/<table/g,'<div class="tw"><table').replace(/<\/table>/g,"</table></div>")}
+
+/* ---------- навигация ---------- */
+function qs(id){return (DATA[id]&&DATA[id].quiz)||[]}
+function progressOf(id){const qq=qs(id);let d=0,ok=0;qq.forEach((q,i)=>{const r=store[id+":"+i];if(r!==undefined){d++;if(r===maxOf(q))ok++}});return {d,ok,n:qq.length}}
+function buildNav(){
+  let h='<a href="#spec" data-id="spec" class="special"><span class="n">§</span>Анализ спецификации</a>';
+  SECTIONS.forEach(s=>{h+='<div class="sec">Раздел '+s.n+' · '+s.t+'</div>';
+    s.topics.forEach(([id,t])=>{const p=progressOf(id);h+='<a href="#'+id+'" data-id="'+id+'"><span class="n">'+id.slice(1)+'</span><span>'+t+'</span>'+(p.d?'<span class="pr">'+p.ok+'/'+p.n+'</span>':'')+'</a>'})});
+  h+='<div class="sec">Контроль</div><a href="#mock" data-id="mock" class="special"><span class="n">40</span>Пробный тест ЕНТ</a>';
+  $("#nav").innerHTML=h;
+}
+$("#menuBtn").addEventListener("click",()=>{const a=$("#aside");a.classList.toggle("open");$("#menuBtn").setAttribute("aria-expanded",a.classList.contains("open"))});
+
+/* ---------- задания ---------- */
+const LETTERS="ABCDEFGH";
+const TYPE_NAME={single:"Один правильный ответ",multi:"Один или несколько правильных",match:"Соответствие",ctx:"На основе контекста"};
+function maxOf(q){return q.t==="multi"||q.t==="match"?2:1}
+function shuffleIdx(n){const a=[...Array(n).keys()];for(let i=n-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function grade(q,sel){
+  if(q.t==="single"||q.t==="ctx")return sel===q.a?1:0;
+  if(q.t==="multi"){const A=new Set(q.a),S=new Set(sel||[]);let e=0;S.forEach(x=>{if(!A.has(x))e++});A.forEach(x=>{if(!S.has(x))e++});return e===0?2:e===1?1:0}
+  if(q.t==="match"){let e=0;q.left.forEach((_,i)=>{if((sel||[])[i]!==q.a[i])e++});return e===0?2:e===1?1:0}
+}
+function renderQ(q,uid,num,opt){
+  opt=opt||{};const el=document.createElement("div");el.className="q";
+  const lv=q.lv||"A";
+  el.innerHTML='<div class="meta"><b>'+num+'</b><span class="chip">'+TYPE_NAME[q.t]+'</span><span class="chip lv-'+lv+'">Уровень '+lv+'</span><span>'+maxOf(q)+' '+(maxOf(q)===1?'балл':'балла')+'</span>'+(opt.topic?'<span>Тема '+opt.topic+'</span>':'')+'</div><p class="qt">'+q.q+'</p>'+(q.code?codeBlock(q.lang||"py",q.code):'');
+  let get;
+  if(q.t==="match"){
+    const box=document.createElement("div");box.className="match";
+    q.left.forEach((l,i)=>{const r=document.createElement("div");r.className="row";r.innerHTML='<div>'+(i+1)+') '+l+'</div><select id="'+uid+'-m'+i+'" aria-label="Соответствие для пункта '+(i+1)+'"><option value="">— выберите —</option>'+q.right.map((x,j)=>'<option value="'+j+'">'+LETTERS[j]+') '+x.replace(/<[^>]+>/g,"")+'</option>').join("")+'</select>';box.appendChild(r)});
+    el.appendChild(box);
+    get=()=>q.left.map((_,i)=>{const v=el.querySelector("#"+uid+"-m"+i).value;return v===""?null:+v});
+  }else{
+    const box=document.createElement("div");box.className="opts";const multi=q.t==="multi";
+    q.opts.forEach((o,j)=>{const lab=document.createElement("label");lab.className="opt";lab.innerHTML='<input type="'+(multi?"checkbox":"radio")+'" name="'+uid+'" id="'+uid+'-'+j+'" value="'+j+'"><span class="L">'+LETTERS[j]+'</span><span>'+o+'</span>';box.appendChild(lab)});
+    el.appendChild(box);
+    get=()=>{const c=[...el.querySelectorAll("input:checked")].map(x=>+x.value);return multi?c:(c.length?c[0]:null)};
+  }
+  function reveal(sel,pts){
+    if(q.t==="match"){el.querySelectorAll(".match .row").forEach((r,i)=>{r.classList.add(sel[i]===q.a[i]?"right":"wrong");if(sel[i]!==q.a[i]){const d=document.createElement("div");d.className="ans";d.innerHTML="Верно: "+LETTERS[q.a[i]]+") "+q.right[q.a[i]];r.appendChild(d)}});el.querySelectorAll("select").forEach(s=>s.disabled=true)}
+    else{const A=Array.isArray(q.a)?q.a:[q.a];el.querySelectorAll(".opt").forEach((lab,j)=>{const ch=lab.querySelector("input").checked;if(A.includes(j))lab.classList.add("right");else if(ch)lab.classList.add("wrong")});el.querySelectorAll("input").forEach(i=>i.disabled=true)}
+    const mx=maxOf(q);const res=el.querySelector(".res");if(res){res.className="res "+(pts===mx?"ok":pts>0?"part":"bad");res.textContent=(pts===mx?"Верно":pts>0?"Частично":"Неверно")+" · "+pts+" из "+mx}
+    if(q.ex){const e=document.createElement("div");e.className="expl";e.innerHTML="<b>Разбор.</b> "+q.ex;el.appendChild(e)}
+  }
+  if(!opt.exam){
+    const qa=document.createElement("div");qa.className="qa";qa.innerHTML='<button class="btn" type="button">Проверить</button><span class="res"></span>';el.appendChild(qa);
+    qa.querySelector("button").addEventListener("click",ev=>{const sel=get();const pts=grade(q,sel);ev.target.disabled=true;reveal(sel,pts);if(opt.onGrade)opt.onGrade(pts)});
+  }
+  el._get=get;el._reveal=reveal;el._q=q;return el;
+}
+
+/* ---------- страницы ---------- */
+function pager(id){const i=ORDER.indexOf(id);const p=ORDER[i-1],n=ORDER[i+1];const name=x=>x==="spec"?"Анализ спецификации":x==="mock"?"Пробный тест ЕНТ":"Тема "+x.slice(1)+". "+TOPIC[x].title;
+  return '<div class="pager">'+(p?'<a href="#'+p+'"><small>Назад</small>'+name(p)+'</a>':'<span></span>')+(n?'<a class="next" href="#'+n+'"><small>Далее</small>'+name(n)+'</a>':'')+'</div>'}
+function showTopic(id){
+  const T=TOPIC[id],D=DATA[id];const v=$("#view");
+  v.innerHTML='<div class="eyebrow">Раздел '+T.sec.n+' · '+T.sec.t+'</div><h1>Тема '+T.num+'. '+T.title+'</h1>'+(D.lead?'<p class="lead">'+D.lead+'</p>':'')+'<div class="content">'+prep(D.html)+'</div>';
+  const hs=[...v.querySelectorAll(".content h2")];
+  if(hs.length>3){const toc=document.createElement("nav");toc.className="toc";toc.setAttribute("aria-label","Содержание темы");
+    toc.innerHTML='<b>Содержание</b><ol>'+hs.map((h,i)=>{h.id="s"+(i+1);return '<li><a href="#'+id+'" data-to="s'+(i+1)+'">'+h.textContent+'</a></li>'}).join("")+'<li><a href="#'+id+'" data-to="quiz">Тренажёр по теме</a></li></ol>';
+    toc.addEventListener("click",e=>{const a=e.target.closest("a[data-to]");if(!a)return;e.preventDefault();const t=document.getElementById(a.dataset.to);if(t)t.scrollIntoView({behavior:"smooth",block:"start"})});
+    v.querySelector(".content").before(toc)}
+  const qq=D.quiz||[];
+  if(qq.length){
+    const h=document.createElement("div");h.className="quiz-h";h.id="quiz";h.innerHTML='<h2>Тренажёр по теме</h2><span class="res" id="tscore"></span>';v.appendChild(h);
+    const intro=document.createElement("p");intro.style.color="var(--muted)";intro.textContent="Форматы как на ЕНТ. За задание с одним ответом 1 балл; с несколькими ответами и на соответствие 2 балла (одна ошибка даёт 1 балл).";v.appendChild(intro);
+    qq.forEach((q,i)=>{q.max=maxOf(q);v.appendChild(renderQ(q,id+"q"+i,(i+1)+".",{onGrade:pts=>{store[id+":"+i]=pts;save();buildNav();mark(id)}}))});
+  }
+  CONTEXTS.filter(c=>c.topic===T.num).forEach((c,ci)=>{
+    const h=document.createElement("h2");h.textContent="Задания на основе контекста";v.appendChild(h);
+    const box=document.createElement("div");box.className="ctx";box.innerHTML='<b>'+c.title+'</b>'+prep(c.text);v.appendChild(box);
+    c.questions.forEach((q,i)=>{q.t="ctx";v.appendChild(renderQ(q,id+"c"+ci+"q"+i,"К"+(i+1)+"."))});
+  });
+  v.insertAdjacentHTML("beforeend",pager(id));
+}
+function showSpec(){$("#view").innerHTML=prep(DATA.spec.html)+pager("spec")}
+
+/* ---------- пробный тест ---------- */
+let timerId=null;
+function pick(arr,n){return shuffleIdx(arr.length).slice(0,n).map(i=>arr[i])}
+function buildMock(){
+  const pool={single:[],multi:[],match:[]};
+  Object.keys(TOPIC).forEach(id=>qs(id).forEach(q=>{if(pool[q.t])pool[q.t].push({q,topic:id.slice(1)})}));
+  const byT={};pool.single.forEach(x=>{(byT[x.topic]=byT[x.topic]||[]).push(x)});
+  let singles=Object.values(byT).map(a=>a[Math.floor(Math.random()*a.length)]);
+  const rest=pool.single.filter(x=>!singles.includes(x));singles=singles.concat(pick(rest,25-singles.length));
+  singles=pick(singles,singles.length);
+  const ctx=CONTEXTS[Math.floor(Math.random()*CONTEXTS.length)];
+  return {singles,ctx,multi:pick(pool.multi,5),match:pick(pool.match,5)};
+}
+function showMock(){
+  const v=$("#view");
+  v.innerHTML='<div class="eyebrow">Контроль</div><h1>Пробный тест ЕНТ</h1><p class="lead">40 заданий в пропорциях спецификации: 25 с одним ответом, 5 по контексту, 5 с несколькими ответами, 5 на соответствие. Максимум 50 баллов, время 80 минут (по 2 минуты на задание). Каждый запуск собирает новый вариант из банка заданий всех 13 тем.</p><div class="qa"><button class="btn" id="startMock" type="button">Начать вариант</button></div>'+pager("mock");
+  $("#startMock").addEventListener("click",startMock);
+}
+function startMock(){
+  const M=buildMock();const v=$("#view");clearInterval(timerId);
+  v.innerHTML='<div class="sticky"><div><div class="eyebrow">Пробный тест</div><b id="answered">Отвечено 0 из 40</b></div><span class="timer" id="timer">80:00</span><button class="btn" id="finish" type="button">Завершить и проверить</button></div>';
+  const cards=[];let n=0;
+  const add=(q,topic,ctxTitle)=>{n++;const el=renderQ(q,"m"+n,n+".",{exam:true,topic});el._topic=topic;cards.push(el);v.appendChild(el)};
+  const h=t=>{const x=document.createElement("h2");x.textContent=t;v.appendChild(x)};
+  h("Часть 1. Задания с одним правильным ответом (1–25)");M.singles.forEach(x=>add(x.q,x.topic));
+  h("Часть 2. Задания на основе контекста (26–30)");const c=document.createElement("div");c.className="ctx";c.innerHTML='<b>'+M.ctx.title+'</b>'+prep(M.ctx.text);v.appendChild(c);
+  M.ctx.questions.forEach(q=>{q.t="ctx";add(q,M.ctx.topic)});
+  h("Часть 3. Один или несколько правильных ответов (31–35)");M.multi.forEach(x=>add(x.q,x.topic));
+  h("Часть 4. Задания на соответствие (36–40)");M.match.forEach(x=>add(x.q,x.topic));
+  const upd=()=>{let a=0;cards.forEach(c=>{const s=c._get();if(s!==null&&!(Array.isArray(s)&&(s.length===0||s.every(z=>z===null))))a++});$("#answered").textContent="Отвечено "+a+" из 40"};
+  v.addEventListener("change",upd);
+  let left=80*60;timerId=setInterval(()=>{left--;const t=$("#timer");if(!t){clearInterval(timerId);return}t.textContent=String(Math.floor(left/60)).padStart(2,"0")+":"+String(left%60).padStart(2,"0");if(left<=0)finish()},1000);
+  let done=false;
+  function finish(){if(done)return;done=true;clearInterval(timerId);let tot=0;const per={};
+    cards.forEach(c=>{const s=c._get();const p=grade(c._q,s);tot+=p;const k=c._topic;per[k]=per[k]||[0,0];per[k][0]+=p;per[k][1]+=maxOf(c._q);c._reveal(s,p)});
+    const rows=Object.keys(per).sort().map(k=>{const [a,b]=per[k];return '<tr><td><a href="#t'+k+'">'+k+'. '+TOPIC["t"+k].title+'</a></td><td class="c">'+a+' / '+b+'</td><td style="min-width:120px"><div class="bar"><i style="width:'+Math.round(a/b*100)+'%"></i></div></td></tr>'}).join("");
+    const box=document.createElement("div");box.className="note ex";box.innerHTML='<b>Результат</b><div class="kv"><div><b>'+tot+' / 50</b><span>баллов</span></div><div><b>'+Math.round(tot/50*100)+'%</b><span>выполнения</span></div></div><div class="tw"><table><tr><th>Тема</th><th class="c">Баллы</th><th>Доля</th></tr>'+rows+'</table></div><p>Ниже разобраны все задания. Слабые темы откройте по ссылкам в таблице.</p><div class="qa"><button class="btn" type="button" id="again">Новый вариант</button></div>';
+    $(".sticky").after(box);$("#finish").disabled=true;$("#again").addEventListener("click",startMock);window.scrollTo({top:0});
+  }
+  $("#finish").addEventListener("click",finish);
+}
+
+/* ---------- роутер ---------- */
+function mark(id){document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("on",a.dataset.id===id))}
+function route(){
+  let id=(location.hash||"#spec").slice(1);if(!ORDER.includes(id))id="spec";
+  clearInterval(timerId);
+  if(id==="spec")showSpec();else if(id==="mock")showMock();else showTopic(id);
+  mark(id);$("#aside").classList.remove("open");window.scrollTo(0,0);
+}
+buildNav();route();window.addEventListener("hashchange",route);
+</script>
