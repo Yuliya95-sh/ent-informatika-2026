@@ -70,6 +70,7 @@ nav a .n{font-family:var(--f-mono);font-size:12px;font-weight:700;color:var(--c)
 nav a .pr{margin-left:auto;font-family:var(--f-mono);font-size:10.5px;color:var(--muted);white-space:nowrap}
 nav a .mini{position:absolute;left:38px;right:8px;bottom:3px;height:2px;border-radius:2px;background:var(--sunk);overflow:hidden}
 nav a .mini b{display:block;height:100%;background:var(--c)}
+nav a.secTest{font-weight:600;font-size:13px;margin:2px 0 4px;border:1px dashed color-mix(in srgb,var(--c) 55%,var(--line))}
 .menu-btn{display:none}
 main{min-width:0;padding-block:24px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .col{max-width:840px;margin:0 auto}
@@ -286,7 +287,7 @@ const SECTIONS=[
  {n:"06",t:"Создание и преобразование информационных объектов",topics:[["t12","Создание и преобразование информационных объектов"],["t13","Веб-проектирование"]]}
 ];
 const TOPIC={};SECTIONS.forEach(s=>s.topics.forEach(([id,t],i)=>TOPIC[id]={id,title:t,sec:s,num:id.slice(1)}));
-const ORDER=["spec",...SECTIONS.flatMap(s=>s.topics.map(x=>x[0])),"mock"];
+const ORDER=["spec",...SECTIONS.flatMap(s=>[...s.topics.map(x=>x[0]),"sec"+s.n]),"mock"];
 const DATA={};const CONTEXTS=[];
 function reg(id,obj){DATA[id]=obj}
 function regCtx(c){CONTEXTS.push(c)}
@@ -312,6 +313,7 @@ function ext(id,o){const D=DATA[id];if(!D)return;
 <script src="data/tb11.js"></script>
 <script src="data/tb10.js"></script>
 <script src="data/tb79.js"></script>
+<script src="data/sec.js"></script>
 <script src="data/contexts.js"></script>
 <script>
 const $=s=>document.querySelector(s);
@@ -397,7 +399,8 @@ const bin4=n=>(+n).toString(2).padStart(4,"0");
 function buildNav(){
   let h='<a href="#spec" data-id="spec" class="sc"><span class="n">§</span>Главная и спецификация</a>';
   SECTIONS.forEach(s=>{h+='<div class="sec '+secCls(s.n)+'"><i></i>Раздел '+s.n+' · '+s.t+'</div>';
-    s.topics.forEach(([id,t])=>{const p=progressOf(id);h+='<a class="'+secCls(s.n)+'" href="#'+id+'" data-id="'+id+'"><span class="n">'+id.slice(1)+'</span><span>'+t+'</span>'+(p.d?'<span class="pr">'+p.ok+'/'+p.n+'</span>':'')+'<span class="mini"><b style="width:'+(p.n?Math.round(p.ok/p.n*100):0)+'%"></b></span></a>'})});
+    s.topics.forEach(([id,t])=>{const p=progressOf(id);h+='<a class="'+secCls(s.n)+'" href="#'+id+'" data-id="'+id+'"><span class="n">'+id.slice(1)+'</span><span>'+t+'</span>'+(p.d?'<span class="pr">'+p.ok+'/'+p.n+'</span>':'')+'<span class="mini"><b style="width:'+(p.n?Math.round(p.ok/p.n*100):0)+'%"></b></span></a>'});
+    h+='<a class="'+secCls(s.n)+' secTest" href="#sec'+s.n+'" data-id="sec'+s.n+'"><span class="n">✓</span><span>Тест по разделу · 100 заданий</span></a>'});
   h+='<div class="sec sc"><i></i>Контроль</div><a href="#mock" data-id="mock" class="sc"><span class="n">40</span>Пробный тест ЕНТ</a><a href="#teacher" data-id="teacher" class="sc"><span class="n">⌘</span>Кабинет учителя</a>';
   $("#nav").innerHTML=h;updRing();
 }
@@ -420,7 +423,7 @@ function bitField(canvas,colors,opts){
 function typeLines(el,lines){if(RM){el.textContent=lines[0];return {stop(){}}}let li=0,ci=0,del=false,tid=null,alive=true;
   function tick(){if(!alive)return;const s=lines[li];if(!del){ci++;el.textContent=s.slice(0,ci);if(ci>=s.length){del=true;tid=setTimeout(tick,1800);return}}else{ci--;el.textContent=s.slice(0,ci);if(ci<=0){del=false;li=(li+1)%lines.length}}tid=setTimeout(tick,del?22:48)}
   tick();return {stop(){alive=false;clearTimeout(tid)}}}
-function countUp(el,to,suffix){suffix=suffix||"";if(RM){el.textContent=to+suffix;return}const t0=performance.now(),d=900;(function f(t){const k=Math.min(1,(t-t0)/d);el.textContent=Math.round(to*(1-Math.pow(1-k,3)))+suffix;if(k<1)requestAnimationFrame(f)})(t0)}
+function countUp(el,to,suffix){suffix=suffix||"";if(RM){el.textContent=to+suffix;return}setTimeout(()=>{el.textContent=to+suffix},1200);const t0=performance.now(),d=900;(function f(t){const k=Math.min(1,(t-t0)/d);el.textContent=Math.round(to*(1-Math.pow(1-k,3)))+suffix;if(k<1)requestAnimationFrame(f)})(t0)}
 
 /* ---------- эффекты ответа ---------- */
 function burst(el,ok){if(RM)return;const r=el.getBoundingClientRect();const host=el;const n=ok?14:0;for(let i=0;i<n;i++){const s=document.createElement("span");s.className="burst";s.textContent=Math.random()<.5?"0":"1";s.style.color=["var(--s1)","var(--s2)","var(--s3)","var(--s4)","var(--s5)","var(--s6)"][i%6];const x=r.width-80+Math.random()*40,y=r.height-30;s.style.left=x+"px";s.style.top=y+"px";host.appendChild(s);const dx=(Math.random()-.5)*160,dy=-60-Math.random()*90;s.animate([{transform:"translate(0,0)",opacity:1},{transform:"translate("+dx+"px,"+dy+"px) rotate("+(dx*2)+"deg)",opacity:0}],{duration:800+Math.random()*400,easing:"cubic-bezier(.2,.7,.3,1)"}).onfinish=()=>s.remove()}}
@@ -467,7 +470,7 @@ function renderQ(q,uid,num,opt){
 }
 
 /* ---------- страницы ---------- */
-function pager(id){const i=ORDER.indexOf(id);const p=ORDER[i-1],n=ORDER[i+1];const name=x=>x==="spec"?"Главная и спецификация":x==="mock"?"Пробный тест ЕНТ":"Тема "+x.slice(1)+". "+TOPIC[x].title;
+function pager(id){const i=ORDER.indexOf(id);const p=ORDER[i-1],n=ORDER[i+1];const name=x=>x==="spec"?"Главная и спецификация":x==="mock"?"Пробный тест ЕНТ":/^sec/.test(x)?"Тест по разделу "+x.slice(3)+" · 100 заданий":"Тема "+x.slice(1)+". "+TOPIC[x].title;
   return '<div class="pager">'+(p?'<a href="#'+p+'"><small>← назад</small>'+name(p)+'</a>':'<span></span>')+(n?'<a class="next" href="#'+n+'"><small>далее →</small>'+name(n)+'</a>':'')+'</div>'}
 function bitsHtml(n){return '<span class="b" aria-label="'+n+' в двоичной системе">'+bin4(n).split("").map(b=>'<i class="'+(b==="1"?"one":"")+'">'+b+'</i>').join("")+'</span>'}
 function showTopic(id){
@@ -529,29 +532,75 @@ function showMock(){
   $("#startMock").addEventListener("click",startMock);
 }
 function startMock(){
-  askStudent(false);stopAnims();const M=buildMock();const v=$("#view");clearInterval(timerId);
-  v.innerHTML='<div class="sticky"><div><div class="eyebrow">Пробный тест</div><b id="answered">Отвечено 0 из 40</b><div class="bar" style="width:180px;margin-top:6px"><i id="ansbar" style="width:0%"></i></div></div><span class="timer" id="timer">80:00</span><button class="btn" id="finish" type="button">Завершить и проверить</button></div>';
+  const M=buildMock();const n0=M.singles.length,nc=M.ctx.questions.length;
+  runExam({label:"Пробный тест",minutes:80,again:startMock,logKind:"mock",parts:[
+    {title:"Часть 1. Задания с одним правильным ответом",items:M.singles},
+    {title:"Часть 2. Задания на основе контекста",ctx:M.ctx},
+    {title:"Часть 3. Один или несколько правильных ответов",items:M.multi},
+    {title:"Часть 4. Задания на соответствие",items:M.match}]});
+}
+/* общий движок экзамена: части, таймер, проверка, итог по темам */
+function runExam(P){
+  askStudent(false);stopAnims();const v=$("#view");v.className="col";clearInterval(timerId);
+  const ctxN=p=>(Array.isArray(p.ctx)?p.ctx:[p.ctx]).reduce((a,c)=>a+c.questions.length,0);
+  let total=0;P.parts.forEach(p=>total+=p.ctx?ctxN(p):p.items.length);
+  let maxPts=0;P.parts.forEach(p=>{if(p.ctx)maxPts+=ctxN(p);else p.items.forEach(x=>maxPts+=maxOf(x.q))});
+  const mm=String(P.minutes).padStart(2,"0")+":00";
+  v.innerHTML='<div class="sticky"><div><div class="eyebrow">'+P.label+'</div><b id="answered">Отвечено 0 из '+total+'</b><div class="bar" style="width:180px;margin-top:6px"><i id="ansbar" style="width:0%"></i></div></div><span class="timer" id="timer">'+mm+'</span><button class="btn" id="finish" type="button">Завершить и проверить</button></div>';
   const cards=[];let n=0;
-  const add=(q,topic)=>{n++;const el=renderQ(q,"m"+n,n+".",{exam:true,topic,sec:secOf(topic)});el._topic=topic;cards.push(el);v.appendChild(el)};
+  const add=(q,topic,idx)=>{n++;const el=renderQ(q,"m"+n,n+".",{exam:true,topic,sec:secOf(topic)});el._topic=topic;el._idx=idx;cards.push(el);v.appendChild(el)};
   const h=t=>{const x=document.createElement("h2");x.textContent=t;v.appendChild(x)};
-  h("Часть 1. Задания с одним правильным ответом (1–25)");M.singles.forEach(x=>add(x.q,x.topic));
-  h("Часть 2. Задания на основе контекста (26–30)");const c=document.createElement("div");c.className="ctx";c.innerHTML='<b>'+M.ctx.title+'</b>'+prep(M.ctx.text);v.appendChild(c);
-  M.ctx.questions.forEach(q=>{q.t="ctx";add(q,M.ctx.topic)});
-  h("Часть 3. Один или несколько правильных ответов (31–35)");M.multi.forEach(x=>add(x.q,x.topic));
-  h("Часть 4. Задания на соответствие (36–40)");M.match.forEach(x=>add(x.q,x.topic));
-  const upd=()=>{let a=0;cards.forEach(c=>{const s=c._get();if(s!==null&&!(Array.isArray(s)&&(s.length===0||s.every(z=>z===null))))a++});$("#answered").textContent="Отвечено "+a+" из 40";$("#ansbar").style.width=(a/40*100)+"%"};
+  P.parts.forEach(p=>{const from=n+1;
+    if(p.ctx){const cs=Array.isArray(p.ctx)?p.ctx:[p.ctx];const cnt=cs.reduce((a,c)=>a+c.questions.length,0);if(!cnt)return;h(p.title+" ("+from+"–"+(from+cnt-1)+")");
+      cs.forEach(c=>{const b=document.createElement("div");b.className="ctx";b.innerHTML='<b>'+c.title+'</b>'+prep(c.text);v.appendChild(b);c.questions.forEach(q=>{q.t="ctx";add(q,c.topic)})})}
+    else{if(!p.items.length)return;h(p.title+" ("+from+"–"+(from+p.items.length-1)+")");p.items.forEach(x=>add(x.q,x.topic,x.idx))}});
+  const isAns=s=>s!==null&&!(Array.isArray(s)&&(s.length===0||s.every(z=>z===null)));
+  const upd=()=>{let a=0;cards.forEach(c=>{if(isAns(c._get()))a++});$("#answered").textContent="Отвечено "+a+" из "+total;$("#ansbar").style.width=(a/total*100)+"%"};
   v.addEventListener("change",upd);
-  let left=80*60;timerId=setInterval(()=>{left--;const t=$("#timer");if(!t){clearInterval(timerId);return}t.textContent=String(Math.floor(left/60)).padStart(2,"0")+":"+String(left%60).padStart(2,"0");t.classList.toggle("low",left<=300);if(left<=0)finish()},1000);
+  const fmt=x=>{const hh=Math.floor(x/3600),mi=Math.floor(x%3600/60),se=x%60;return (hh?hh+":"+String(mi).padStart(2,"0"):String(mi).padStart(2,"0"))+":"+String(se).padStart(2,"0")};
+  let left=P.minutes*60;$("#timer").textContent=fmt(left);timerId=setInterval(()=>{left--;const t=$("#timer");if(!t){clearInterval(timerId);return}t.textContent=fmt(left);t.classList.toggle("low",left<=300);if(left<=0)finish()},1000);
   let done=false;
   function finish(){if(done)return;done=true;clearInterval(timerId);let tot=0;const per={};
-    cards.forEach(c=>{const s=c._get();const p=grade(c._q,s);tot+=p;const k=c._topic;per[k]=per[k]||[0,0];per[k][0]+=p;per[k][1]+=maxOf(c._q);c._reveal(s,p)});
+    cards.forEach(c=>{const s=c._get();const p=grade(c._q,s);tot+=p;const k=c._topic;per[k]=per[k]||[0,0];per[k][0]+=p;per[k][1]+=maxOf(c._q);c._reveal(s,p);
+      if(P.saveProgress&&c._idx!==undefined&&isAns(s)){const key="t"+k+":"+c._idx;store[key]=p;logEvent({k:"q",t:k,i:c._idx,p,m:maxOf(c._q)})}});
+    if(P.saveProgress){save();buildNav();mark(location.hash.slice(1))}
     const rows=Object.keys(per).sort().map(k=>{const [a,b]=per[k];return '<tr class="'+secCls(secOf(k))+'"><td><a href="#t'+k+'">'+k+'. '+TOPIC["t"+k].title+'</a></td><td class="c">'+a+' / '+b+'</td><td style="min-width:120px"><div class="bar"><i style="width:'+Math.round(a/b*100)+'%;background:var(--c)"></i></div></td></tr>'}).join("");
-    const box=document.createElement("div");box.className="note ex";box.innerHTML='<b>Результат</b><div class="kv"><div><b id="totB">0</b><span>баллов из 50</span></div><div><b id="pctB">0%</b><span>выполнения</span></div></div><div class="tw"><table><tr><th>Тема</th><th class="c">Баллы</th><th>Доля</th></tr>'+rows+'</table></div><p>Ниже разобраны все задания. Слабые темы откройте по ссылкам в таблице.</p><div class="qa"><button class="btn" type="button" id="again">Новый вариант</button></div>';
-    $(".sticky").after(box);$("#finish").disabled=true;$("#again").addEventListener("click",startMock);window.scrollTo({top:0});
-    const perT={};Object.keys(per).forEach(k=>perT[k]=per[k][0]+"/"+per[k][1]);logEvent({k:"mock",s:tot,per:perT});
-    countUp($("#totB"),tot," / 50");countUp($("#pctB"),Math.round(tot/50*100),"%");if(tot>=35)burst(box,true);
+    const pct=Math.round(tot/maxPts*100);
+    const verdict=pct>=80?"Отличный результат: раздел усвоен.":pct>=60?"Хороший уровень. Повторите темы с низкой долей верных ответов.":pct>=40?"Базовый уровень. Перечитайте теорию слабых тем и пройдите их тренажёры.":"Раздел пока не усвоен. Начните с теории и тренажёров каждой темы.";
+    const box=document.createElement("div");box.className="note ex";box.innerHTML='<b>Результат</b><div class="kv"><div><b id="totB">0</b><span>баллов из '+maxPts+'</span></div><div><b id="pctB">0%</b><span>выполнения</span></div></div><p>'+verdict+'</p><div class="tw"><table><tr><th>Тема</th><th class="c">Баллы</th><th>Доля</th></tr>'+rows+'</table></div><p>Ниже разобраны все задания. Слабые темы откройте по ссылкам в таблице.</p><div class="qa"><button class="btn" type="button" id="again">Новый вариант</button></div>';
+    $(".sticky").after(box);$("#finish").disabled=true;$("#again").addEventListener("click",P.again);window.scrollTo({top:0});
+    if(P.logKind==="mock"){const perT={};Object.keys(per).forEach(k=>perT[k]=per[k][0]+"/"+per[k][1]);logEvent({k:"mock",s:tot,per:perT})}
+    countUp($("#totB"),tot," / "+maxPts);countUp($("#pctB"),pct,"%");if(pct>=70)burst(box,true);
   }
   $("#finish").addEventListener("click",finish);
+}
+
+/* ---------- тест по разделу: 100 заданий в пропорциях ЕНТ ---------- */
+const SEC_PLAN={single:65,ctx:10,multi:12,match:13};
+function secPool(sn){const S=SECTIONS.find(s=>s.n===sn);const pool={single:[],multi:[],match:[]};
+  S.topics.forEach(([id])=>qs(id).forEach((q,i)=>{if(pool[q.t])pool[q.t].push({q,topic:id.slice(1),idx:i})}));
+  const ctx=CONTEXTS.filter(c=>S.topics.some(([id])=>id.slice(1)===c.topic));return {S,pool,ctx}}
+function buildSection(sn){const {pool,ctx}=secPool(sn);
+  const cx=pick(ctx,Math.min(ctx.length,Math.ceil(SEC_PLAN.ctx/5)));const nCtx=cx.reduce((a,c)=>a+c.questions.length,0);
+  const nMulti=Math.min(SEC_PLAN.multi,pool.multi.length),nMatch=Math.min(SEC_PLAN.match,pool.match.length);
+  const nSingle=Math.min(pool.single.length,100-nCtx-nMulti-nMatch);
+  return {ctx:cx,singles:pick(pool.single,nSingle),multi:pick(pool.multi,nMulti),match:pick(pool.match,nMatch)}}
+function showSection(sn){
+  const v=$("#view");const {S,pool,ctx}=secPool(sn);v.className="col "+secCls(sn);
+  const tot=pool.single.length+pool.multi.length+pool.match.length+ctx.reduce((a,c)=>a+c.questions.length,0);
+  v.innerHTML='<header class="banner fade"><canvas aria-hidden="true"></canvas><div class="eyebrow">Раздел '+sn+' · итоговый тест</div><h1>Тест по разделу '+sn+'. '+S.t+'</h1><p class="lead" style="margin:0">100 заданий по темам '+S.topics.map(([id])=>id.slice(1)).join(", ")+' в пропорциях ЕНТ. Максимум 125 баллов, время 200 минут (по 2 минуты на задание). Каждый запуск собирает новый вариант из банка раздела.</p></header>'+
+    '<div class="tw"><table><tr><th>Часть</th><th class="c">Заданий</th><th class="c">Баллов за задание</th><th class="c">Всего баллов</th></tr><tr><td>1. Один правильный ответ</td><td class="c">65</td><td class="c">1</td><td class="c">65</td></tr><tr><td>2. На основе контекста</td><td class="c">10</td><td class="c">1</td><td class="c">10</td></tr><tr><td>3. Один или несколько правильных ответов</td><td class="c">12</td><td class="c">2</td><td class="c">24</td></tr><tr><td>4. Соответствие</td><td class="c">13</td><td class="c">2</td><td class="c">26</td></tr><tr><td><b>Итого</b></td><td class="c"><b>100</b></td><td class="c"></td><td class="c"><b>125</b></td></tr></table></div>'+
+    '<p style="color:var(--muted)">В банке раздела '+tot+' заданий. Результаты попадут в прогресс по темам'+(statsOn()?' и в статистику учителя':'')+'.</p><div class="qa"><button class="btn" id="startSec" type="button">▶ Начать тест по разделу</button></div>'+pager("sec"+sn);
+  const sv="--s"+(+sn);anims.push(bitField(v.querySelector(".banner canvas"),()=>[sv],{fs:15,max:.35}));
+  $("#startSec").addEventListener("click",()=>startSection(sn));
+}
+function startSection(sn){const M=buildSection(sn);
+  runExam({label:"Тест по разделу "+sn,minutes:200,again:()=>startSection(sn),saveProgress:true,parts:[
+    {title:"Часть 1. Задания с одним правильным ответом",items:M.singles},
+    {title:"Часть 2. Задания на основе контекста",ctx:M.ctx},
+    {title:"Часть 3. Один или несколько правильных ответов",items:M.multi},
+    {title:"Часть 4. Задания на соответствие",items:M.match}]});
+  document.getElementById("view").classList.add(secCls(sn).split(" ")[1]);
 }
 
 /* ---------- кабинет учителя ---------- */
@@ -602,7 +651,7 @@ function mark(id){document.querySelectorAll("nav a").forEach(a=>a.classList.togg
 function route(){
   let id=(location.hash||"#spec").slice(1);if(!ORDER.includes(id)&&id!=="teacher")id="spec";
   clearInterval(timerId);stopAnims();
-  if(id==="spec")showSpec();else if(id==="mock")showMock();else if(id==="teacher")showTeacher();else showTopic(id);
+  if(id==="spec")showSpec();else if(id==="mock")showMock();else if(id==="teacher")showTeacher();else if(/^sec\d\d$/.test(id))showSection(id.slice(3));else showTopic(id);
   mark(id);$("#aside").classList.remove("open");$("#menuBtn").setAttribute("aria-expanded","false");window.scrollTo(0,0);
 }
 buildNav();renderWho();route();window.addEventListener("hashchange",route);flush();
