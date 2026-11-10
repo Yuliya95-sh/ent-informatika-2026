@@ -6,7 +6,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Tektur:wght@500;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300..900&family=Caveat:wght@500..700&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap">
 <style>
 /* Layout: «редактор кода» — слева дерево проекта (6 разделов = 6 цветов подсветки синтаксиса), справа файл-тема с цветной шапкой; номера тем показаны и в двоичной системе */
 :root{
@@ -17,7 +17,8 @@
   --ok:#14864A; --ok-soft:#DFF4E8; --bad:#C62828; --bad-soft:#FCE4E4; --warn:#8A5A00; --warn-soft:#FFF1D2;
   --code-bg:#12182B; --code-ink:#DDE3F2; --c-kw:#7AA8FF; --c-str:#F6C177; --c-num:#FF8FA3; --c-com:#7D87A6; --c-tag:#6EE7B7;
   --glow:rgba(58,87,232,.18);
-  --f-display:"Tektur","Golos Text",system-ui,sans-serif;
+  --f-display:"Unbounded","Golos Text",system-ui,sans-serif;
+  --f-hand:"Caveat","Segoe Print","Bradley Hand","Comic Sans MS",cursive;
   --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,Consolas,"Courier New",monospace;
   --r:12px;
@@ -48,7 +49,7 @@ a{color:var(--accent)}
 .app{display:grid;grid-template-columns:300px minmax(0,1fr);min-height:100vh}
 aside{background:var(--surface);border-right:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);height:100vh;overflow-y:auto;padding:18px 12px 40px max(12px,env(safe-area-inset-left,0px))}
 .brand{display:flex;align-items:center;gap:12px;padding:2px 6px 14px}
-.logo{font-family:var(--f-display);font-weight:800;font-size:19px;letter-spacing:.01em;line-height:1.1;text-decoration:none;color:var(--ink)}
+.logo{font-family:var(--f-display);font-weight:800;font-size:18px;letter-spacing:-.01em;line-height:1.1;text-decoration:none;color:var(--ink)}
 .logo .p{color:var(--accent)}
 .logo .cur{display:inline-block;width:.55em;height:1em;background:var(--accent);vertical-align:-2px;margin-left:2px}
 .logo small{display:block;font-family:var(--f-mono);font-weight:400;font-size:11px;color:var(--muted);letter-spacing:0;margin-top:5px}
@@ -77,8 +78,9 @@ main{min-width:0;padding-block:24px 80px;padding-left:max(16px,env(safe-area-ins
 
 /* ---------- типографика ---------- */
 .eyebrow{font-family:var(--f-mono);font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
-h1{font-family:var(--f-display);font-weight:800;font-size:clamp(26px,3.8vw,38px);line-height:1.15;margin:6px 0 10px;text-wrap:balance;letter-spacing:.005em}
-h2{font-family:var(--f-display);font-weight:700;font-size:23px;line-height:1.25;margin:44px 0 12px;text-wrap:balance;letter-spacing:.01em}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(24px,3.3vw,34px);line-height:1.2;margin:6px 0 10px;text-wrap:balance;letter-spacing:-.015em}
+h2{font-family:var(--f-display);font-weight:600;font-size:clamp(19px,2.3vw,22px);line-height:1.3;margin:44px 0 12px;text-wrap:balance;letter-spacing:-.01em}
+.hand{font-family:var(--f-hand);font-weight:600;letter-spacing:0;text-transform:none}
 .content h2::before{content:"// ";font-family:var(--f-mono);font-weight:600;font-size:.8em;color:var(--c,var(--accent))}
 h3{font-size:17.5px;margin:26px 0 6px;font-weight:700}
 p,li{max-width:68ch}
@@ -101,8 +103,9 @@ pre.code .lang{position:absolute;right:14px;top:9px;font-size:10.5px;letter-spac
 .note{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:12px 16px;margin:16px 0}
 .note>b:first-child{display:block;font-family:var(--f-mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;color:var(--muted)}
 .trap{background:var(--warn-soft);border-color:transparent}
-.trap>b:first-child{color:var(--warn)}
-.trap>b:first-child::before{content:"⚠ "}
+.trap>b:first-child{color:var(--warn);font-family:var(--f-hand);font-size:29px;font-weight:700;line-height:1.05;text-transform:none;letter-spacing:0;margin-bottom:6px;transform:rotate(-1.2deg);transform-origin:left center;width:max-content;max-width:100%}
+.trap>b:first-child::before{content:"⚠ ";font-family:var(--f-body);font-size:.7em;vertical-align:.12em}
+.trap>b:first-child::after{content:"";display:block;height:3px;margin-top:1px;border-radius:3px;background:currentColor;opacity:.35;transform:rotate(.6deg) scaleX(.96)}
 .ex{background:color-mix(in srgb,var(--accent) 10%,var(--surface));border-color:transparent}
 .ex>b:first-child{color:var(--accent)}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:14px 0}
@@ -131,8 +134,13 @@ pre.code .lang{position:absolute;right:14px;top:9px;font-size:10.5px;letter-spac
 .hero>*:not(canvas){position:relative}
 .prompt{font-family:var(--f-mono);font-size:14px;color:var(--c-tag)}
 .prompt .u{color:var(--c-kw)}
-.hero h1{color:#FFFFFF;font-size:clamp(30px,5.2vw,50px);margin:10px 0 6px}
+.hero h1{color:#FFFFFF;font-size:clamp(28px,4.8vw,48px);font-weight:800;margin:10px 0 6px;text-wrap:wrap}
 .hero h1 .accent{color:var(--c-str)}
+.hero h1 .w{display:inline-block;white-space:nowrap}
+.hero h1 .ch{display:inline-block}
+.hero .note-hand{position:absolute;right:22px;top:18px;font-family:var(--f-hand);font-weight:600;font-size:25px;line-height:1;color:var(--c-tag);transform:rotate(-5deg);pointer-events:none}
+.hero .note-hand svg{display:block;width:64px;height:26px;margin:2px 0 0 auto;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+@media (max-width:640px){.hero .note-hand{position:static;display:inline-block;margin:2px 0 4px;transform:rotate(-3deg)}.hero .note-hand svg{display:none}}
 .hero p{color:#B9C2DE;margin:0 0 16px;font-size:16.5px}
 .typed{font-family:var(--f-mono);font-size:14.5px;color:#DDE3F2;min-height:1.6em}
 .typed::after{content:"▍";color:var(--c-tag);margin-left:2px}
@@ -146,7 +154,8 @@ pre.code .lang{position:absolute;right:14px;top:9px;font-size:10.5px;letter-spac
 .tile{position:relative;display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 14px 16px;overflow:hidden;min-width:0}
 .tile::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:var(--c)}
 .tile .top{display:flex;align-items:center;justify-content:space-between;gap:8px;font-family:var(--f-mono);font-size:12px}
-.tile .num{font-family:var(--f-display);font-weight:800;font-size:22px;color:var(--c)}
+.tile .num{font-family:var(--f-display);font-weight:500;font-size:24px;line-height:1;color:var(--c)}
+.tile:hover .num,.tile:focus-visible .num{font-weight:900}
 .tile .bin{color:var(--muted);letter-spacing:.05em}
 .tile .tt{font-weight:600;font-size:14.5px;line-height:1.35}
 .tile .tp{font-size:12px;color:var(--muted);font-family:var(--f-mono)}
@@ -209,6 +218,7 @@ details.sol summary{cursor:pointer;font-weight:700;color:var(--c,var(--accent));
 details.sol[open] summary{margin-bottom:6px}
 .steps{margin:6px 0;padding-left:20px}.steps li{margin:3px 0}
 .burst{position:absolute;pointer-events:none;font-family:var(--f-mono);font-weight:700;font-size:14px;z-index:3}
+.praise{position:absolute;right:18px;top:8px;pointer-events:none;font-family:var(--f-hand);font-weight:700;font-size:26px;line-height:1;color:var(--ok);transform:rotate(-6deg);z-index:3}
 .toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--code-bg);color:#FFFFFF;font-family:var(--f-mono);font-size:13.5px;padding:9px 16px;border-radius:99px;z-index:20;box-shadow:0 6px 24px rgba(0,0,0,.25)}
 
 /* ---------- ученик и кабинет учителя ---------- */
@@ -260,6 +270,22 @@ details.sol[open] summary{margin-bottom:6px}
   @keyframes flip{0%{transform:rotateX(90deg)}100%{transform:none}}
   .fade{animation:fadeup .45s ease both}
   @keyframes fadeup{from{transform:translateY(8px)}to{transform:none}}
+  /* живые шрифты: Unbounded переменной толщины «дышит» */
+  .tile .num{transition:font-weight .35s cubic-bezier(.2,.8,.2,1)}
+  .content h2{transition:font-weight .3s ease}
+  .content h2:hover{font-weight:800}
+  .banner h1{animation:wIn .9s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes wIn{from{font-weight:300;letter-spacing:.03em}to{font-weight:700;letter-spacing:-.015em}}
+  .hero h1 .ch{animation:chIn .8s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--i) * 28ms);transition:font-weight .22s ease-out}
+  @keyframes chIn{from{font-weight:300;transform:translateY(.18em)}to{font-weight:800;transform:none}}
+  .hero .note-hand{animation:handIn .7s 1s cubic-bezier(.3,1.4,.5,1) backwards}
+  @keyframes handIn{from{opacity:0;transform:rotate(-14deg) scale(.6)}}
+  .hero .note-hand svg path{stroke-dasharray:90;animation:draw .8s 1.4s ease-out backwards}
+  @keyframes draw{from{stroke-dashoffset:90}to{stroke-dashoffset:0}}
+  .trap>b:first-child::after{transform-origin:left;animation:underline .6s .2s ease-out backwards}
+  @keyframes underline{from{transform:scaleX(0)}}
+  .praise{animation:praise 1.3s ease-out forwards}
+  @keyframes praise{0%{opacity:0;transform:rotate(-14deg) scale(.5)}18%{opacity:1;transform:rotate(-6deg) scale(1.08)}70%{opacity:1;transform:rotate(-6deg) translateY(-6px)}100%{opacity:0;transform:rotate(-6deg) translateY(-16px)}}
 }
 </style>
 
@@ -297,25 +323,25 @@ function ext(id,o){const D=DATA[id];if(!D)return;
   if(o.traps){const k=D.html.lastIndexOf(TRAP_MK);const u=D.html.indexOf("<ul>",k);if(k>=0&&u>=0)D.html=D.html.slice(0,u+4)+o.traps.map(t=>"<li>"+t+"</li>").join("")+D.html.slice(u+4)}
   if(o.quiz)D.quiz=(D.quiz||[]).concat(o.quiz)}
 </script>
-<script src="data/spec.js?v=13"></script>
-<script src="data/s1.js?v=13"></script>
-<script src="data/s2.js?v=13"></script>
-<script src="data/s3.js?v=13"></script>
-<script src="data/s4.js?v=13"></script>
-<script src="data/s5.js?v=13"></script>
-<script src="data/s6.js?v=13"></script>
-<script src="data/d1.js?v=13"></script>
-<script src="data/d2.js?v=13"></script>
-<script src="data/d3.js?v=13"></script>
-<script src="data/d4.js?v=13"></script>
-<script src="data/d5.js?v=13"></script>
-<script src="data/d6.js?v=13"></script>
-<script src="data/tb11.js?v=13"></script>
-<script src="data/tb10.js?v=13"></script>
-<script src="data/tb79.js?v=13"></script>
-<script src="data/sec.js?v=13"></script>
-<script src="data/pres.js?v=13"></script>
-<script src="data/contexts.js?v=13"></script>
+<script src="data/spec.js?v=14"></script>
+<script src="data/s1.js?v=14"></script>
+<script src="data/s2.js?v=14"></script>
+<script src="data/s3.js?v=14"></script>
+<script src="data/s4.js?v=14"></script>
+<script src="data/s5.js?v=14"></script>
+<script src="data/s6.js?v=14"></script>
+<script src="data/d1.js?v=14"></script>
+<script src="data/d2.js?v=14"></script>
+<script src="data/d3.js?v=14"></script>
+<script src="data/d4.js?v=14"></script>
+<script src="data/d5.js?v=14"></script>
+<script src="data/d6.js?v=14"></script>
+<script src="data/tb11.js?v=14"></script>
+<script src="data/tb10.js?v=14"></script>
+<script src="data/tb79.js?v=14"></script>
+<script src="data/sec.js?v=14"></script>
+<script src="data/pres.js?v=14"></script>
+<script src="data/contexts.js?v=14"></script>
 <script>
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
@@ -427,7 +453,17 @@ function typeLines(el,lines){if(RM){el.textContent=lines[0];return {stop(){}}}le
 function countUp(el,to,suffix){suffix=suffix||"";if(RM){el.textContent=to+suffix;return}setTimeout(()=>{el.textContent=to+suffix},1200);const t0=performance.now(),d=900;(function f(t){const k=Math.min(1,(t-t0)/d);el.textContent=Math.round(to*(1-Math.pow(1-k,3)))+suffix;if(k<1)requestAnimationFrame(f)})(t0)}
 
 /* ---------- эффекты ответа ---------- */
-function burst(el,ok){if(RM)return;const r=el.getBoundingClientRect();const host=el;const n=ok?14:0;for(let i=0;i<n;i++){const s=document.createElement("span");s.className="burst";s.textContent=Math.random()<.5?"0":"1";s.style.color=["var(--s1)","var(--s2)","var(--s3)","var(--s4)","var(--s5)","var(--s6)"][i%6];const x=r.width-80+Math.random()*40,y=r.height-30;s.style.left=x+"px";s.style.top=y+"px";host.appendChild(s);const dx=(Math.random()-.5)*160,dy=-60-Math.random()*90;s.animate([{transform:"translate(0,0)",opacity:1},{transform:"translate("+dx+"px,"+dy+"px) rotate("+(dx*2)+"deg)",opacity:0}],{duration:800+Math.random()*400,easing:"cubic-bezier(.2,.7,.3,1)"}).onfinish=()=>s.remove()}}
+const PRAISE=["верно!","отлично!","так держать","в точку!","молодец!","супер!"];
+function praise(el){const s=document.createElement("span");s.className="praise";s.setAttribute("aria-hidden","true");s.textContent=PRAISE[Math.floor(Math.random()*PRAISE.length)];el.appendChild(s);setTimeout(()=>s.remove(),1400)}
+/* Живой заголовок: буквы Unbounded проявляются по очереди и «выдыхают» (становятся тоньше) рядом с курсором */
+function liveTitle(h){if(!h||RM||h.dataset.live)return;h.dataset.live="1";h.setAttribute("aria-label",h.textContent);let i=0;
+  const wrap=node=>{[...node.childNodes].forEach(n=>{if(n.nodeType===3){const f=document.createDocumentFragment();n.textContent.split(/(\s+)/).forEach(part=>{if(!part)return;if(/^\s+$/.test(part)){f.appendChild(document.createTextNode(part));return}const w=document.createElement("span");w.className="w";w.setAttribute("aria-hidden","true");[...part].forEach(c=>{const s=document.createElement("span");s.className="ch";s.style.setProperty("--i",i++);s.textContent=c;w.appendChild(s)});f.appendChild(w)});n.replaceWith(f)}else if(n.nodeType===1)wrap(n)})};
+  wrap(h);const chs=[...h.querySelectorAll(".ch")],host=h.closest(".hero")||h;
+  if(!matchMedia("(pointer:fine)").matches)return;let raf=0,px=0,py=0;
+  const upd=()=>{raf=0;chs.forEach(c=>{const r=c.getBoundingClientRect();const d=Math.hypot(r.left+r.width/2-px,r.top+r.height/2-py);c.style.fontWeight=d<140?Math.round(300+500*(d/140)):""})};
+  host.addEventListener("pointermove",e=>{px=e.clientX;py=e.clientY;if(!raf)raf=requestAnimationFrame(upd)});
+  host.addEventListener("pointerleave",()=>{chs.forEach(c=>c.style.fontWeight="")})}
+function burst(el,ok){if(RM)return;if(ok)praise(el);const r=el.getBoundingClientRect();const host=el;const n=ok?14:0;for(let i=0;i<n;i++){const s=document.createElement("span");s.className="burst";s.textContent=Math.random()<.5?"0":"1";s.style.color=["var(--s1)","var(--s2)","var(--s3)","var(--s4)","var(--s5)","var(--s6)"][i%6];const x=r.width-80+Math.random()*40,y=r.height-30;s.style.left=x+"px";s.style.top=y+"px";host.appendChild(s);const dx=(Math.random()-.5)*160,dy=-60-Math.random()*90;s.animate([{transform:"translate(0,0)",opacity:1},{transform:"translate("+dx+"px,"+dy+"px) rotate("+(dx*2)+"deg)",opacity:0}],{duration:800+Math.random()*400,easing:"cubic-bezier(.2,.7,.3,1)"}).onfinish=()=>s.remove()}}
 let toastT=null;function toast(msg){let t=$("#toast");if(!t){t=document.createElement("div");t.id="toast";t.className="toast";t.setAttribute("role","status");document.body.appendChild(t)}t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>{t.hidden=true},2200)}
 
 /* ---------- задания ---------- */
@@ -502,7 +538,7 @@ function showTopic(id){
 function showSpec(){
   const v=$("#view");v.className="col";const t=totals();let nq=0;Object.keys(TOPIC).forEach(id=>nq+=qs(id).length);
   const tiles=SECTIONS.flatMap(s=>s.topics.map(([id,tt])=>{const p=progressOf(id);const n=+id.slice(1);return '<a class="tile '+secCls(s.n)+'" href="#'+id+'"><span class="top"><span class="num">'+id.slice(1)+'</span><span class="bin">'+bin4(n)+'₂</span></span><span class="tt">'+tt+'</span><span class="tp">'+(p.d?p.ok+' из '+p.n+' верно':p.n+' заданий')+'</span><span class="tbar"><i style="width:'+(p.n?Math.round(p.ok/p.n*100):0)+'%"></i></span></a>'})).join("");
-  v.innerHTML='<section class="hero fade"><canvas aria-hidden="true"></canvas><div class="prompt"><span class="u">student@ent</span>:~$ python3 prepare.py --exam 2026</div><h1>Информатика на ЕНТ <span class="accent">без пробелов</span></h1><p>13 тем по спецификации 2026 года, разборы задач, ловушки и тренажёры в форматах теста.</p><div class="typed" id="typed" aria-live="off"></div>'+
+  v.innerHTML='<section class="hero fade"><canvas aria-hidden="true"></canvas><div class="prompt"><span class="u">student@ent</span>:~$ python3 prepare.py --exam 2026</div><div class="note-hand" aria-hidden="true">ты сможешь!<svg viewBox="0 0 64 26"><path d="M58 3 C 46 20, 24 24, 6 18 M6 18 l9 -6 M6 18 l10 4"/></svg></div><h1>Информатика на ЕНТ <span class="accent">без пробелов</span></h1><p>13 тем по спецификации 2026 года, разборы задач, ловушки и тренажёры в форматах теста.</p><div class="typed" id="typed" aria-live="off"></div>'+
     '<div class="stats"><div><b data-to="13">13</b><span>тем</span></div><div><b data-to="'+nq+'">'+nq+'</b><span>заданий в тренажёрах</span></div><div><b data-to="50">50</b><span>баллов максимум</span></div><div><b data-to="80">80</b><span>минут на тест</span></div></div>'+
     '<div class="cta"><a class="btn" href="#t01">Начать с темы 01</a><a class="btn ghost" href="#mock">Пробный тест</a></div></section>'+
     '<h2>Темы</h2><p style="color:var(--muted);margin-top:-4px">Цвет обозначает раздел спецификации, двоичное число — номер темы. Полоска внизу карточки показывает ваш прогресс'+(t.d?': решено верно '+t.ok+' из '+t.n+'.':'.')+'</p><div class="tiles">'+tiles+'</div>'+
@@ -653,6 +689,7 @@ function route(){
   let id=(location.hash||"#spec").slice(1);if(!ORDER.includes(id)&&id!=="teacher")id="spec";
   clearInterval(timerId);stopAnims();
   if(id==="spec")showSpec();else if(id==="mock")showMock();else if(id==="teacher")showTeacher();else if(/^sec\d\d$/.test(id))showSection(id.slice(3));else showTopic(id);
+  liveTitle($("#view .hero h1"));
   mark(id);$("#aside").classList.remove("open");$("#menuBtn").setAttribute("aria-expanded","false");window.scrollTo(0,0);
 }
 buildNav();renderWho();route();window.addEventListener("hashchange",route);flush();
